@@ -1,0 +1,125 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace myApp
+{
+    class Program
+    {
+        // Leitura de numeros inteiros
+        static Int32 LerInteiroPositivo(String mensagem)
+        {
+            Int32 numero = 0;
+            Boolean lerNumero = true;
+
+            Console.WriteLine(mensagem);
+
+            do
+            {
+                try
+                {
+                    numero = Convert.ToInt32(Console.ReadLine());
+
+                    if (numero > 0)
+                    {
+                        lerNumero = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Favor informar um número inteiro positivo");
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Valor inválido, favor informar um número inteiro positivo");
+                }
+            } while (lerNumero == true);
+
+            return numero;
+        }
+        // Leitura de nomes
+        static String LerString(String mensagem)
+        {
+            Console.WriteLine(mensagem);
+
+            String texto = Console.ReadLine();
+
+            return texto;
+        }
+        // localizar itens na coleção
+        static Int32 ObterPosicaoAluno(String[] alunos, Int32 totalAlunos)
+        {
+            Int32 cadastrarMatricula = LerInteiroPositivo("Informe a matrícula do aluno:");
+
+            for (Int32 i = 0; i < totalAlunos; i++)
+            {
+                if (Convert.ToInt32(alunos[i].Split(';')[0]) == cadastrarMatricula)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        static void Main(string[] args)
+        {
+
+            Int32 opcao = 0;
+            String cadastraNome;
+
+            Queue<Int32> filaAtendimento = new Queue<Int32>();
+            Dictionary<Int32, String> clientes = new Dictionary<Int32, String>();
+
+            
+            do
+            {
+                opcao = LerInteiroPositivo(
+                    "1 - Liberar Ticket\n2 - Atender Ticket\n3 - Consultar Fila\n4 - Sair");
+                switch (opcao)
+                {
+                    case 1:
+                        cadastraNome = LerString("Informe o nome do cliente:");
+
+                        clientes.Add(clientes.Count + 1, cadastraNome);
+
+
+                        Console.WriteLine("Ticket liberado com sucesso!");
+
+                    break;
+
+                    case 2:
+                        cadastraNome = LerString("Informe o nome do cliente:");
+
+                        if (clientes.ContainsValue(cadastraNome))
+                        {
+                            filaAtendimento.Enqueue(clientes.Count);
+                            Console.WriteLine("Ticket atendido com sucesso!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Cliente não encontrado!");
+                        }
+
+                    break;
+                    case 3:
+                        while (filaAtendimento.Count > 0)
+                        {
+                            Console.WriteLine($"{clientes.Count}º" + clientes[filaAtendimento.Dequeue()]);
+                        }
+                    break;
+                         
+                    case 4:
+                        Console.WriteLine("Finalizando programa...");
+                        break;
+                    default:
+                        Console.WriteLine("Opção invalida");
+
+                        break;
+                }
+            } while (opcao != 5);
+        }
+    }
+}
+
+

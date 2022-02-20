@@ -1,0 +1,43 @@
+using System;
+
+namespace myApp4
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string Maior = "aaaaaaaaa";
+            string menor = "zzzzzzzzz";
+
+            Int32 respostaMenor = 0;
+            Int32 respostaMaior = 0;
+
+            string palavra = "";
+            
+
+            Console.WriteLine("Digite um número");
+
+            Int32 Qndt = Convert.ToInt32(Console.ReadLine());
+
+            for (Int32 i = 0; i < Qndt; i++)
+            {
+            
+              palavra = Console.ReadLine();
+
+              respostaMaior = palavra.CompareTo(Maior);
+              respostaMenor = palavra.CompareTo(menor);
+
+              if (respostaMaior == 1) {
+                  Maior = palavra;
+              }
+              if(respostaMenor == -1) {
+                  menor = palavra;     
+              }
+                  
+            }
+            Console.WriteLine();
+            Console.WriteLine(Maior.ToUpper());
+            Console.WriteLine(menor.ToLower());
+        }
+    }
+}

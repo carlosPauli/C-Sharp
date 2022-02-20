@@ -1,0 +1,25 @@
+using System;
+
+namespace Outro
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            
+            Int32 numero = 0;
+            
+            
+            Console.WriteLine("Por favor informe um número: ");
+            numero = Convert.ToInt32(Console.ReadLine());
+
+            Int32 total = (numero % 2);
+            if (total == 1) {
+                Console.WriteLine($"O Número {numero} é primo");
+            }
+            else {
+                Console.WriteLine($"O Numero {numero} não é primo");
+            }
+        }
+    }
+}

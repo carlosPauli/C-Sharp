@@ -1,0 +1,35 @@
+using System;
+
+namespace myApp5
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Variables
+           String Palavras = "";
+           String Palavras2 = "";
+
+           Int32 Qndt = 0;
+
+
+           Console.WriteLine("Por favor indique a quantidade de pares");
+
+           Qndt = Convert.ToInt32(Console.ReadLine());
+
+           for(Int32 i = 0; i < Qndt; i++)
+            {
+                Console.WriteLine($"Escreva a primeira palavra do par {i + 1}");
+                Palavras = Console.ReadLine().Replace("a","á").Replace("e","é").Replace("i","í").Replace("o","ó").Replace("u","ú");
+
+                Console.WriteLine($"Escreva a Segunda palavra do par {i + 1}");
+                Palavras2 = Console.ReadLine().Replace("a","á").Replace("e","é").Replace("i","í").Replace("o","ó").Replace("u","ú");
+
+            if (String.Equals(Palavras, Palavras2))  
+                Console.WriteLine($"{Palavras} e {Palavras2} são iguais.");  
+            else  
+                Console.WriteLine($"{Palavras} e {Palavras2} são diferentes.");  
+            } 
+        }
+    }
+}

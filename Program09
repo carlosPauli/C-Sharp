@@ -1,0 +1,136 @@
+﻿using System;
+
+namespace myApp
+{
+    class Program
+    {
+        // start first method
+        static Int32 LerInteiroPositivo(String mensagem)
+        {
+            Console.WriteLine(mensagem);
+
+            Int32 numeroLido = -1;
+
+            Boolean leTri = true;
+
+            do
+            {
+                try
+                {
+                    numeroLido = Convert.ToInt32(Console.ReadLine());
+
+                    if (numeroLido > 0)
+                    {
+                        leTri = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Favor informar um número inteiro positivo");
+                        Console.WriteLine("Com a quantidade de triângulo que deseja");
+                        
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Valor inválido, favor informar um número inteiro positivo");
+                }
+            } while (leTri == true);
+
+            return numeroLido;
+        }
+        // end first method 
+        // Start second method
+        static Int32 LerMedidaPositiva(String mensagem)
+        {
+            Console.WriteLine(mensagem);
+
+            Int32 MedidaLida = -1;
+
+            Boolean lerMedida = true;
+
+            
+            do
+            {
+                try
+                {
+                    MedidaLida = Convert.ToInt32(Console.ReadLine());
+
+                    if (MedidaLida > 0)
+                    {
+                        lerMedida = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Favor informar uma medida valida");
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Valor inválido, favor informar um número inteiro positivo");
+                }
+            } while (lerMedida == true);
+
+            return MedidaLida;
+        }
+        // end second 
+        
+
+        static void Main(string[] args)
+        {
+            Int32 soma1pt1, soma1pt2, soma2pt1, soma2pt2,soma3pt1,soma3pt2;
+            
+            Int32 inteiroPositivo = LerInteiroPositivo("Informe a quantidade de triangulos:");
+
+        
+            for(Int32 i = 0; i < inteiroPositivo; i++)
+            {
+                
+                Int32 NumLadoA = LerMedidaPositiva($"Informe numero do que mede o lado A  : ");
+                Int32 NumLadoB = LerMedidaPositiva($"Informe numero do que mede o lado B  : ");
+                Int32 NumLadoC = LerMedidaPositiva($"Informe numero do que mede o lado C  : ");
+
+                soma1pt1 = NumLadoB - NumLadoC;
+                soma2pt1 = NumLadoA - NumLadoC;
+                soma3pt1 = NumLadoA - NumLadoB;
+                
+                if (soma1pt1 < 0)
+                {
+                    soma1pt1 = soma1pt1 * -1;
+                }
+                
+                if (soma2pt1 < 0)
+                {
+                    soma1pt1 = soma1pt1 * -1;
+                }
+                
+                if (soma3pt1 < 0)
+                {
+                    soma1pt1 = soma1pt1 * -1;
+                }
+                
+                soma1pt2 = NumLadoB + NumLadoC;
+                soma2pt2 = NumLadoA + NumLadoC;
+                soma3pt2 = NumLadoA + NumLadoB;
+                //antes da gambi pt1
+                if (soma1pt1 < NumLadoA && NumLadoA < soma1pt2) 
+                {
+                    //pt2
+                    if (soma2pt1 < NumLadoB && NumLadoB < soma2pt2) 
+                    {
+                        if (soma3pt1 < NumLadoC && NumLadoC < soma3pt2) 
+                        {
+                            Console.WriteLine("Triangulo desenhado");
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Os valores não são um triangulo");
+                }
+                
+
+            }
+
+        }
+    }
+}

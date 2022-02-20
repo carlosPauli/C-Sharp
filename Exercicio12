@@ -1,0 +1,138 @@
+﻿using System;
+
+namespace myApp11
+{
+    class Program
+    {
+        // First Method
+        static Int32 LerNumeroInteiro(String mensagem, Boolean positivo = true)
+        {
+            Console.WriteLine(mensagem);
+            Int32 numLido = -1;
+            Boolean validar = true;
+
+            do
+            {
+                try
+                {
+                    numLido = Convert.ToInt32(Console.ReadLine());
+                    if (positivo)
+                    {
+                        if (numLido > 0)
+                        {
+                            validar = false;
+                        }
+                        else
+                        {
+                            throw new Exception("Informe um valor inteiro positivo.");
+                        }
+                    }
+                    else
+                    {
+                        validar = false;
+                    }
+                }
+                catch (FormatException )
+                {
+                    Console.WriteLine("Quantidade inválida, favor informar um número no campo.");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Quantidade inválida, detalhes: {e.Message}");
+                }
+            } while (validar);
+
+            return numLido;
+            // End First Method
+
+            // Second Method
+        }
+      
+        // Second Method
+        static Int32 Menu(String mensagem, String[] alunos)
+        {
+            Int32 numLido = -1;
+            Boolean validar = true;
+
+            do
+            {
+                try
+                {
+                    Console.WriteLine(mensagem);
+                    numLido = Convert.ToInt32(Console.ReadLine());
+
+                    switch (numLido)
+                    {
+                        case 1:
+                            for (int i = 0; i < alunos.Length; i++)
+                            {
+                                if (alunos[i] == null)
+                                {
+                                    Int32 matricula = LerNumeroInteiro("\nInforme a matrícula do aluno");
+                                    Console.WriteLine("Informe o nome do aluno");
+                                    String nome = Console.ReadLine();
+                                    nome = $"{matricula}; {nome}";
+                                    alunos[i] = nome;
+                                    Console.WriteLine("Aluno Cadastrado ");
+                                    Console.WriteLine("");
+                                    break;
+                                }
+                            }
+                            break;
+
+                        case 2:
+                            foreach (var aluno in alunos)
+                            {
+                                Console.WriteLine(aluno);
+                            }
+                            Console.WriteLine("Aluno Excluído com sucesso!");
+                            break;
+
+                        case 3:
+                            Console.WriteLine("Aluno encontrado com sucesso!");
+                            break;
+                        case 4:
+                            Console.WriteLine("\nFinalizando sistema...Pressione alguma tecla para finalizar");
+                            validar = false;
+                            break;
+                        default:
+                            throw new Exception("Informe um número de acordo com o menu");
+                    }
+                }
+                catch (FormatException )
+                {
+                    Console.WriteLine("Entrada inválida, favor informar um número no campo.");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Entrada inválida, detalhes: {e.Message}");
+                }
+            } while (validar);
+
+            return numLido;
+        }
+        // End Second Method
+        // Main Code
+
+        static void Main(string[] args)
+        {
+            try
+            {
+                Int32 totalAlunos = LerNumeroInteiro("Informe a quantidade de alunos da turma");
+                String[] alunos = new string[totalAlunos];
+                
+                Console.WriteLine("=================================");
+                Console.WriteLine("Escolha uma opção do menu abaixo");
+                Int32 menuOpcoes = Menu("1 - Matricular Aluno \n2 - Excluir Aluno \n3 - Procurar aluno \n4 - Sair", alunos);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            finally
+            {
+                Console.ReadKey();
+            }
+        }
+    }
+}

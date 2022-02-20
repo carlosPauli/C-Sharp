@@ -1,0 +1,182 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace myApp
+{
+    class Program
+    {
+        // Metodo para leitura da matricula
+        static Int32 LerInteiroPositivo(String mensagem)
+        {
+            Int32 numero = 0;
+            Boolean lerNumero = true;
+
+            Console.WriteLine(mensagem);
+
+            do
+            {
+                try
+                {
+                    numero = Convert.ToInt32(Console.ReadLine());
+
+                    if (numero > 0)
+                    {
+                        lerNumero = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Favor informar um número inteiro positivo");
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Valor inválido, favor informar um número inteiro positivo");
+                }
+            } while (lerNumero == true);
+
+            return numero;
+        }
+
+        // Leitura de nome dos professores
+        static String LerString(String mensagem)
+        {
+            Console.WriteLine(mensagem);
+
+            String texto = Console.ReadLine();
+
+            return texto;
+        }
+        // Achar alunos na lista
+        static Int32 ObterPosicaoAluno(String[] alunos, Int32 totalAlunos)
+        {
+            Int32 cadastrarMatricula = LerInteiroPositivo("Informe a matrícula do aluno:");
+
+            for (Int32 i = 0; i < totalAlunos; i++)
+            {
+                if (Convert.ToInt32(alunos[i].Split(';')[0]) == cadastrarMatricula)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        static void Main(string[] args)
+        {
+
+            Int32 menu = 0;
+            Int32 cadastrarMatricula;
+            String nomeProfessor;
+            Int32 cadastraTurma;
+
+            Dictionary<Int32, String> professores = new Dictionary<Int32, String>();
+            HashSet<Int32> salas = new HashSet<Int32>();
+            Dictionary<Int32, Int32> reservas = new Dictionary<Int32, Int32>();
+
+            do
+            {
+                menu = LerInteiroPositivo(
+                    "1 - Cadastrar Professor\n2 - Cadastrar Sala\n3 - Reservar Sala\n4 - Consultar Reserva\n5 - Alterar Reserva\n6 - Excluir Reserva\n7 - Sair");
+
+                switch (menu)
+                {
+                    case 1:
+                        cadastrarMatricula = LerInteiroPositivo("Informe a matrícula do professor:");
+                        nomeProfessor = LerString("Informe o nome do professor:");
+
+                        professores.Add(cadastrarMatricula, $"{cadastrarMatricula}-{nomeProfessor}");
+
+
+                        Console.WriteLine("Professor matriculado com sucesso");
+                        break;
+                    case 2:
+                        cadastrarMatricula = LerInteiroPositivo("Informe a sala:");
+
+                        salas.Add(cadastrarMatricula);
+
+                        Console.WriteLine("Sala cadastrada com sucesso");
+
+                    break;
+                    
+                    case 3:
+
+                            cadastraTurma = LerInteiroPositivo("Informe a sala:");
+                            cadastrarMatricula = LerInteiroPositivo("Informe a matrícula do professor:");
+
+                            if (salas.Contains(cadastraTurma) && professores.ContainsKey(cadastrarMatricula))
+                            {
+                                reservas.Add(cadastraTurma, cadastrarMatricula);
+                                Console.WriteLine("Reserva realizada com sucesso");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Sala ou professor não cadastrado");
+                            } break;
+                        
+                    case 4:
+                        cadastrarMatricula = LerInteiroPositivo("Informe a sala:");
+
+                        if (reservas.ContainsKey(cadastrarMatricula))
+                        {
+                            Console.WriteLine($"Professor: {professores[reservas[cadastrarMatricula]]}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Sala não reservada");
+                        }
+
+                    break;
+
+                    case 5:
+                        cadastrarMatricula = LerInteiroPositivo("Informe a sala:");
+                        
+                        if (reservas.ContainsKey(cadastrarMatricula))
+                        {
+                            reservas[cadastrarMatricula] = LerInteiroPositivo("Informe a matrícula do professor:");
+                            Console.WriteLine("Reserva alterada com sucesso");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Sala não reservada");
+                        }
+
+                    break;
+
+                    case 6:
+                        cadastrarMatricula = LerInteiroPositivo("Informe a sala:");
+
+                        if (salas.Contains(cadastrarMatricula))
+                        {
+                            if (reservas.ContainsKey(cadastrarMatricula))
+                            {
+                                reservas.Remove(cadastrarMatricula);
+
+                                Console.WriteLine("Reserva excluída com sucesso");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Sala não reservada");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Sala não cadastrada");
+                        }
+
+                    break;
+
+                    case 7:
+                        Console.WriteLine("Finalizando programa...");
+                        break;
+                    default:
+                        Console.WriteLine("Opção invalida");
+                        break;
+                }
+            } while (menu != 7);
+        }
+    }
+}
+
+

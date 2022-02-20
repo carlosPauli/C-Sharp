@@ -1,0 +1,102 @@
+﻿using System;
+
+namespace myApp
+{
+    class Program
+    {
+        // start first method
+        static Int32 LerInteiroPositivo(String mensagem)
+        {
+            Console.WriteLine(mensagem);
+
+            Int32 numeroLido = -1;
+
+            Boolean lerNota = true;
+
+            do
+            {
+                try
+                {
+                    numeroLido = Convert.ToInt32(Console.ReadLine());
+
+                    if (numeroLido > 0)
+                    {
+                        lerNota = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Favor informar um número inteiro positivo");
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Valor inválido, favor informar um número inteiro positivo");
+                }
+            } while (lerNota == true);
+
+            return numeroLido;
+        }
+        // end first method 
+        // Start second method
+        static double LerNotaPositiva(String mensagem)
+        {
+            Console.WriteLine(mensagem);
+
+            double NotaLida = -1;
+
+            Boolean lerANota = true;
+
+
+
+            do
+            {
+                try
+                {
+                    NotaLida = Convert.ToDouble(Console.ReadLine());
+
+                    if (NotaLida > 0)
+                    {
+                        lerANota = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Favor informar uma nota valida");
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Valor inválido, favor informar um número inteiro positivo");
+                }
+            } while (lerANota == true);
+
+            return NotaLida;
+        }
+        // end second method
+
+        static void Main(string[] args)
+        {
+            double inteiroPositivo = LerInteiroPositivo("Informe a quantidade de alunos:");
+
+
+
+            for(Int32 i = 0; i < inteiroPositivo; i++)
+            {
+
+                double NotaAluno = LerNotaPositiva("Informe a nota1 do aluno");
+                double NotaAluno2 = LerNotaPositiva("Informe a nota2 do aluno");
+
+                double Media = ((NotaAluno * 4 ) + (NotaAluno2 * 6)) / 10;
+
+                 if(Media >= 7){
+                Console.WriteLine($"O aluno  esta aprovado");
+            }
+            else
+            {
+                Console.WriteLine($"O aluno  esta reprovado");
+            }
+
+            }
+
+    }
+    }
+}

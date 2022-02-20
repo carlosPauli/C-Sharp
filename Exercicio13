@@ -1,0 +1,176 @@
+﻿using System;
+
+namespace myApp
+{
+    class Program
+    {
+        static Int32 LerNumeroInteiro(String mensagem, Boolean positivo = true)
+        {
+            Console.WriteLine(mensagem);
+            Int32 numLido = -1;
+            Boolean valido = true;
+
+            do
+            {
+                try
+                {
+                    numLido = Convert.ToInt32(Console.ReadLine());
+                    if (positivo)
+                    {
+                        if (numLido > 0)
+                        {
+                            valido = false;
+                        }
+                        else
+                        {
+                            throw new Exception("Informe um valor inteiro positivo.");
+                        }
+                    }
+                    else
+                    {
+                        valido = false;
+                    }
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Quantidade inválida, favor informar um número no campo.");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Quantidade inválida, detalhes: {e.Message}");
+                }
+            } while (valido);
+
+            return numLido;
+        }
+        static Double LerNumeroReal(String mensagem, Boolean positivo = true)
+        {
+            Console.WriteLine(mensagem);
+            Double numLido = -1;
+            Boolean valido = true;
+
+            do
+            {
+                try
+                {
+                    numLido = Convert.ToDouble(Console.ReadLine());
+                    if (positivo)
+                    {
+                        if (numLido >= 0 && numLido <= 10)
+                        {
+                            valido = false;
+                        }
+                        else
+                        {
+                            throw new Exception("Nota inválida.");
+                        }
+                    }
+                    else
+                    {
+                        valido = false;
+                    }
+                }
+                catch (FormatException e)
+                {
+                    Console.WriteLine("Entrada inválida, favor informar um número no campo.");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Número inválido, detalhes: {e.Message}");
+                }
+            } while (valido);
+
+            return numLido;
+        }
+        static Int32 Menu(String mensagem, String[] alunos)
+        {
+            Int32 numLido = -1;
+            Boolean valido = true;
+
+            do
+            {
+                try
+                {
+                    Console.WriteLine(mensagem);
+                    numLido = Convert.ToInt32(Console.ReadLine());
+
+                    switch (numLido)
+                    {
+                        case 1:
+                            for (int i = 0; i < alunos.Length; i++)
+                            {
+                                if (alunos[i] == null)
+                                {
+                                    Int32 matricula = LerNumeroInteiro("\nInforme a matrícula do aluno");
+                                    Console.WriteLine("Informe o nome do aluno");
+                                    String nome = Console.ReadLine();
+                                    nome = $"{matricula}; {nome}";
+                                    alunos[i] = nome;
+                                    break;
+                                }
+
+                                if (alunos[i] != null && i == alunos.Length - 1)
+                                {
+                                    Console.WriteLine("Lista de alunos cheia!");
+                                }
+                            }
+
+                            break;
+                        case 2:
+                                Int32 excluirMatricula = LerNumeroInteiro("\nInforme a matrícula do aluno");
+
+                            for (int i = 0; i < alunos.Length; i++)
+                            {
+                                if (alunos[i].Contains($"{excluirMatricula}"))
+                                {
+                                    alunos[i] = null;
+                                    break;
+                                }
+                            }
+
+                            Console.WriteLine("Aluno Excluído com sucesso!");
+                            break;
+                        case 3:
+                            Console.WriteLine("Aluno encontrado com sucesso!");
+                            break;
+                        case 4:
+                            Console.WriteLine("\nSaindo do sistema...");
+                            valido = false;
+                            break;
+                        default:
+                            throw new Exception("Informe um número de acordo com o menu");
+                    }
+                }
+                catch (FormatException e)
+                {
+                    Console.WriteLine("Entrada inválida, favor informar um número no campo.");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Entrada inválida, detalhes: {e.Message}");
+                }
+            } while (valido);
+
+            return numLido;
+        }
+
+        static void Main(string[] args)
+        {
+            try
+            {
+                Int32 totalAlunos = LerNumeroInteiro("Informe a quantidade de alunos da turma");
+                String[] alunos = new string[totalAlunos];
+
+                Int32 opc = Menu("1 - Matricular Aluno \n2 - Excluir Aluno \n3 - Procurar aluno \n4 - Sair", alunos);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            finally
+            {
+                Console.ReadKey();
+            }
+        }
+    }
+}

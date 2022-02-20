@@ -1,0 +1,40 @@
+using System;
+
+namespace myApp2
+{
+    class Program
+    {
+        static void Main(String[] args)
+        {
+        // Variables
+            string palavra;
+            string resul = "";
+            
+        // Code
+            Console.WriteLine("Informe um número inteiro:");
+            Int32 qdnt =Convert.ToInt32(Console.ReadLine());
+
+            
+
+            for(Int32 i = 1; i <= qdnt; i++)
+                
+            {
+                Console.WriteLine("Digite a palavra");
+                
+                palavra = Console.ReadLine();
+               
+
+                if (i < qdnt) {
+                    resul = resul + palavra + ",";
+                }
+                else {
+                    resul = resul + palavra;
+                }
+            }
+                    
+            Console.WriteLine(resul);
+                
+
+    }
+    }
+}

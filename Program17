@@ -1,0 +1,162 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace myApp
+{
+    class Program
+    {
+        static Int32 ProcurarPosicaoAluno(List<String> listaAlunos)
+        {
+            Int32 matriculaAluno = LerInteiroPositivo("Informe a matrícula do aluno:");
+
+            for (Int32 j = 0; j < listaAlunos.Count; j++)
+            {    
+                if (Convert.ToInt32(listaAlunos[j].Split(';')[0]) == matriculaAluno)
+                {
+                    return j;
+                }
+            }
+
+            return -1;
+        }
+
+        static void MostraAlunos (List<String> listaAlunos)
+        {
+            Int32 posicaoAluno = ProcurarPosicaoAluno(listaAlunos);
+
+            if(posicaoAluno == -1)
+            {
+                Console.WriteLine("Matricula inexistente");
+            }
+            else
+            {
+                Console.WriteLine(listaAlunos[posicaoAluno].Split(';')[1]);
+
+                Console.WriteLine("ALUNO ENCONTRADO");
+            } 
+        }
+
+        static void ExcluirAluno(List<String> listaAlunos)
+        {
+            Int32 posicaoAluno = ProcurarPosicaoAluno(listaAlunos);
+
+            if(posicaoAluno == -1)
+            {
+                 Console.WriteLine("Matricula inexistente");
+            }
+            else
+            {
+                listaAlunos.RemoveAt(posicaoAluno);
+
+                Console.WriteLine("ALUNO EXCLUIDO COM SUCESSO");
+            }
+
+        }
+
+        static void AlterarAluno(List<String> listaAlunos)
+        {
+            Int32 posicaoAluno = ProcurarPosicaoAluno(listaAlunos);
+
+            if(posicaoAluno == -1)
+            {
+                 Console.WriteLine("Matricula inexistente");
+            }
+            else
+            {
+                Console.WriteLine("Informe o nome do aluno:");
+                String nomeAluno = Console.ReadLine();
+
+                listaAlunos[posicaoAluno] = ($"{listaAlunos[posicaoAluno].Split(';')[0]};{nomeAluno}");
+
+                Console.WriteLine("ALUNO ALTERADO COM SUCESSO");
+            }   
+        }
+
+        static void MatricularAluno(List<String> listaAlunos)
+        {
+            Int32 matriculaAluno = LerInteiroPositivo("Informe a matricula do aluno");
+
+            Console.WriteLine("Informe o nome do aluno:");
+            String nomeAluno = Console.ReadLine();
+
+            listaAlunos.Add($"{matriculaAluno};{nomeAluno}");  
+
+            Console.WriteLine("ALUNO MATRICULADO COM SUCESSO");
+        }
+        
+        static Int32 LerInteiroPositivo (string mensagem)
+        {
+            Console.WriteLine(mensagem);
+
+            Int32 numeroInteiroLido = 0; 
+            Boolean lerNumeroInteiro = true;
+
+            do
+            {
+                try
+                {
+                    numeroInteiroLido = Convert.ToInt32(Console.ReadLine());
+
+                    if (numeroInteiroLido > 0 )
+                    {
+                        lerNumeroInteiro = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Quantidade inválida");
+                    }
+                    
+                    
+                }
+                catch  
+                {
+                    Console.WriteLine("Valor inválido. Por favor, informe um valor inteiro positivo");
+                } 
+            } while (lerNumeroInteiro == true);
+
+            return numeroInteiroLido;
+            
+        }
+
+        static void Main(string[] args)
+        {
+            List<String> listaAlunos = new List<String>();
+
+            Int32 opcao;
+
+            do
+            { 
+                Console.WriteLine();
+                Console.WriteLine("----------------------------------");  
+                Console.WriteLine("1 - Matricular Aluno");
+                Console.WriteLine("2 - Alterar Aluno");
+                Console.WriteLine("3 - Excluir Aluno");
+                Console.WriteLine("4 - Exibir Aluno");
+                Console.WriteLine("5 - Sair");
+
+                opcao = LerInteiroPositivo("Informe o valor da opção:");        
+
+                switch (opcao)
+                {
+                    case 1:
+                        MatricularAluno(listaAlunos);
+                        break;
+                    case 2:
+                        AlterarAluno(listaAlunos);
+                        break;
+                    case 3:
+                        ExcluirAluno(listaAlunos);
+                        break;
+                    case 4:
+                        MostraAlunos(listaAlunos);
+                        break;
+                    case 5:
+                        break;
+                    default:
+                        Console.WriteLine("OPÇÃO INVÁLIDA");
+                        break;
+                }
+            } while (opcao != 5);
+        }
+    }
+}

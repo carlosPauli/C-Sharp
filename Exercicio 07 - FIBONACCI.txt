@@ -1,0 +1,51 @@
+using System;
+
+namespace myApp7
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+           
+            try
+            {
+                Console.WriteLine("Informe um número inteiro positivo:");
+
+                Int32 numero = Convert.ToInt32(Console.ReadLine());
+
+                if (numero < 0)
+                {
+                    throw new Exception("Número Invalido");
+                    
+                }
+                if (numero == 1 || numero == 0)
+                {
+                    Console.WriteLine(numero);
+                    
+                }
+                else
+                {
+                    Int32 soma = 0;
+                    Int32 soma2 = 1 ;
+                    Int32 soma3 = 0;
+
+                for(Int32 i = 2; i < numero; i++)
+                {
+                    soma3 = soma + soma2;
+
+                    soma = soma2;
+
+                    soma2 = soma3;
+                }
+
+                Console.WriteLine(soma3);
+    
+                }
+                }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }         
+        }
+    }
+}

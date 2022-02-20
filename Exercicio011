@@ -1,0 +1,56 @@
+﻿using System;
+
+namespace Arrays
+{
+    class myApp2
+    {
+         static Int32 LerInteiroPositivo(String mensagem)
+        {
+            Int32 numero = 0;
+            Boolean lerNumero = true;
+
+            Console.WriteLine(mensagem);
+
+            do
+            {
+                try
+                {
+                    numero = Convert.ToInt32(Console.ReadLine());
+
+                   switch (numero)
+                   {
+                        case 1:
+                            Console.WriteLine("Aluno matriculado com sucesso");
+                            break;
+                        case 2:
+                            Console.WriteLine("Aluno excluido com sucesso");
+                            break;
+                        case 3:
+                            Console.WriteLine("Aluno encontrado com sucesso");
+                            break;
+                        case 4:
+                            break;
+                       
+                   }
+                }
+                catch
+                {
+                    Console.WriteLine("Valor inválido, favor informar um número inteiro positivo");
+                }
+            } while (lerNumero == true);
+
+            return numero;
+        }
+    // === === === === ===
+
+            static void Main(string[] args)
+        {
+            Console.WriteLine("1 - Matricular aluno:");
+            Console.WriteLine("2 - Excluir aluno:");
+            Console.WriteLine("3 - Encontrar aluno:");
+            Console.WriteLine("4 - Exit");
+
+            Int32 menu = LerInteiroPositivo("Informe uma opção de menu");
+        }
+    }
+}

@@ -1,0 +1,274 @@
+﻿using System;
+
+namespace Prova02
+{
+     class Program
+    {
+
+        // Primeiro Metodo - Ler numero de alunos
+        static Int32 LerInteiroPositivo(String mensagem)
+        {
+            Int32 numero = 0;
+            Boolean lerNumero = true;
+
+            Console.WriteLine(mensagem);
+
+            do
+            {
+                try
+                {
+                    numero = Convert.ToInt32(Console.ReadLine());
+
+                    if (numero > 0)
+                    {
+                        lerNumero = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Favor informar um número inteiro positivo");
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Valor inválido, favor informar um número inteiro positivo");
+                }
+            } while (lerNumero == true);
+
+            return numero;
+        }
+
+            // Segundo metodo - Leitura dos pesos
+        static Double LerRealPositivo(String mensagem)
+        {
+            Double numero = 0.0;
+            Boolean lerNumero = true;
+
+            Console.WriteLine(mensagem);
+
+            do
+            {
+                try
+                {
+                    numero = Convert.ToDouble(Console.ReadLine());
+
+                    if (numero >= 0)
+                    {
+                        lerNumero = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Favor informar um número real positivo ou igual a zero");
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Valor inválido, favor informar um número real positivo ou igual a zero");
+                }
+            } while (lerNumero == true);
+
+            return numero;
+        }
+        static String LerString(String mensagem)
+        {
+            Console.WriteLine(mensagem);
+
+            String texto = Console.ReadLine();
+
+            return texto;
+        }
+        // Quarto metodo - Achar aluno no array
+        static Int32 ObterPosicaoAluno(String[] alunos, Int32 totalAlunos)
+        {
+            Int32 matriculaAluno = LerInteiroPositivo("Informe a matrícula do aluno:");
+
+            for (Int32 i = 0; i < totalAlunos; i++)
+            {
+                if (Convert.ToInt32(alunos[i].Split(';')[0]) == matriculaAluno)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+      
+        // VOID MAIN
+        static void Main(string[] args)
+        {
+            Int32 capacidadeAlunos = LerInteiroPositivo("Informe o total de alunos:");
+            Console.WriteLine("=====================");
+            Int32 capacidadeMes = 12;
+            Int32 totalAlunos = 0;
+
+            String[] alunos = new String[capacidadeAlunos];
+            Double[,] PesosAlunos = new Double[capacidadeAlunos, capacidadeMes];
+
+            Int32 menu = 0;
+            Int32 matriculaAluno;
+            Int32 posicaoAluno;
+            Double pesoInicialAluno;
+            String nomeAluno;
+
+            do
+            {
+                
+                menu = LerInteiroPositivo("1 - Cadastrar Aluno\n2 - Alterar Aluno\n3 - Excluir Aluno\n4 - Pesar Aluno \n5 - Calcular evolução\n6 - Sair");
+                switch (menu)
+                {
+                    case 1:
+                        if (totalAlunos == capacidadeAlunos)
+                        {
+                            Console.WriteLine("Limite de alunos atingido");
+                        }
+                        else
+                        {
+                            matriculaAluno = LerInteiroPositivo("Informe a matrícula do aluno:");
+                            nomeAluno = LerString("Informe o nome do aluno:");
+                            pesoInicialAluno = LerRealPositivo("Informe o peso inicial do aluno em KG");
+
+                            alunos[totalAlunos] = $"{matriculaAluno};{nomeAluno};{pesoInicialAluno}";
+
+                            totalAlunos = totalAlunos + 1;
+
+                            Console.WriteLine("");
+                            Console.WriteLine("Aluno matriculado com sucesso");
+                            Console.WriteLine("");
+                        }
+                        break;
+                    case 2:
+                        posicaoAluno = ObterPosicaoAluno(alunos, totalAlunos);
+
+                        if (posicaoAluno >= 0)
+                        {
+                            nomeAluno = LerString("Informe o nome do aluno: ");
+                            // pesoInicialAluno = LerRealPositivo("Informe o peso do aluno: ");
+
+                            pesoInicialAluno = Convert.ToDouble(alunos[posicaoAluno].Split(';')[2]);
+                            matriculaAluno = Convert.ToInt32(alunos[posicaoAluno].Split(';')[0]);
+
+                            alunos[posicaoAluno] = $"{matriculaAluno};{nomeAluno};{pesoInicialAluno}";
+
+                            Console.WriteLine("Aluno alterado com sucesso");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Aluno não encontrado");
+                        }
+                        break;
+                    case 3:
+                        posicaoAluno = ObterPosicaoAluno(alunos, totalAlunos);
+
+                        if (posicaoAluno >= 0)
+                        {
+                            Int32 indice;
+
+                            for (indice = posicaoAluno; indice < totalAlunos - 1; indice++)
+                            {
+                                alunos[indice] = alunos[indice + 1];
+
+                                for (Int32 j = 0; j < capacidadeMes; j++)
+                                {
+                                    PesosAlunos[indice, j] = PesosAlunos[indice + 1, j];
+                                }
+                            }
+
+                            alunos[indice] = null;
+
+                            for (Int32 j = 0; j < capacidadeMes; j++)
+                            {
+                                PesosAlunos[indice, j] = 0;
+                            }
+
+                            totalAlunos = totalAlunos - 1;
+
+                            Console.WriteLine("Aluno excluído com sucesso");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Aluno não encontrado");
+                        }
+                        break;
+                    case 4:
+                        posicaoAluno = ObterPosicaoAluno(alunos, totalAlunos);
+
+                        if (posicaoAluno >= 0)
+                        {
+                            Int32 numeroDeMeses = LerInteiroPositivo("Informe o número do mês:");
+
+                            if (numeroDeMeses <= capacidadeMes)
+                            {
+                                Double peso = LerRealPositivo("Informe o peso do aluno:");
+
+                                PesosAlunos[posicaoAluno, numeroDeMeses - 1] = peso;
+
+                                Console.WriteLine("Peso lançado com sucesso");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Disciplina não encontrada");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Aluno não encontrado");
+                        }
+                        break;
+                    
+                    case 5:
+                        posicaoAluno = ObterPosicaoAluno(alunos, totalAlunos);
+
+                        if (posicaoAluno >= 0)
+                        {
+                            Int32 j = 0;
+                            String[] dadosAluno = alunos[posicaoAluno].Split(';');
+                            
+                            Console.WriteLine($"O aluno chamado {dadosAluno[1]} da matricula {dadosAluno[0]} começou com {dadosAluno[2]} e esta com {PesosAlunos[posicaoAluno, j]}");
+                            Console.WriteLine("Evolução do aluno");
+
+                            for (;j < capacidadeMes; j++)
+                            {
+                                
+                                Console.WriteLine($"Peso no mês {j + 1}: {PesosAlunos[posicaoAluno, j]}");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Aluno não encontrado");
+                        }
+
+                        
+                        
+                        break;
+                        
+                    case 6:
+                        Console.WriteLine("Finalizando o programa...");
+                        break;
+                    default:
+                        Console.WriteLine("Opção inválida");
+                        break;
+                }
+
+                // VERIFCAÇÃO DE FUNCIONAMENTO, TIREI PARA NÃO POLUIR O RESULTADO DO CODIGO
+                // for (Int32 i = 0; i < capacidadeAlunos; i++)
+                // {
+                //     if (alunos[i] == null)
+                //     {
+                //         Console.WriteLine($"alunos[{i}] = null");
+                //     }
+                //     else
+                //     {
+                //         Console.WriteLine($"alunos[{i}] = {alunos[i]}");
+                //     }
+                // }
+
+                // for (Int32 i = 0; i < capacidadeAlunos; i++)
+                // {
+                //     for (Int32 j = 0; j < capacidadeMes; j++)
+                //     {
+                //         Console.WriteLine($"PesosAlunos[{i}, {j}] = {PesosAlunos[i, j]}");
+                //     }
+                // }
+            } while (menu != 6);
+        }
+    }
+}
